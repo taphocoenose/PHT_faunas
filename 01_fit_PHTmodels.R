@@ -1,5 +1,5 @@
 
-# Last edited on a Windows 10 machine, November 3, 2020.
+# Last edited on a Windows 10 machine, Jan 22, 2021.
 # rbreslawski@smu.edu for questions.
 
 # Load packages
@@ -11,11 +11,34 @@ library(matrixStats)
 # Fix randomization
 set.seed(342543)
 
-# Import data
-d <- read.csv("data_PHTfaunas.csv", header=TRUE, stringsAsFactors=FALSE)
-
-# Remove any NA cases and create a column for all components
-d <- d[!is.na(d$Paleol), ]
+# DATA
+# All data is from:
+#   Grayson DK, Meltzer DJ, Breslawski RP (2021), Overkill and the 
+#   North American archaeological record-not guilty by association? 
+#   A comment on Wolfe and Broughton (2020). Journal of Archaeological 
+#   Science, in press."
+Genus <- c('Antilocapra', 'Stockoceros', 'Odocoileus', 'Ovis', 'Rangifer', 
+           'Platygonus', 'Castoroides', 'Cervus', 'Navahoceros', 'Bootherium', 
+           'Nothrotheriops', 'Equus', 'Tapirus ', 'Alces', 'Ovibos', 
+           'Euceratherium', 'Megalonyx', 'Cervalces', 'Bison', 'Camelops', 
+           'Mammut ', 'Cuvieronius', 'Mammuthus')
+Paleol <- c(4, 1, 17, 4, 7, 
+            5, 3, 6, 1, 4, 
+            8, 25, 2, 1, 1, 
+            2, 2, 6, 29, 14, 
+            18, 1, 32)
+Archaeol <- c(7, 0, 15, 2, 3, 
+              0, 0, 3, 0, 0, 
+              0, 1, 0, 0, 0, 
+              0, 0, 0, 61, 1, 
+              2, 1, 12)
+Extinct <- c(0, 1, 0, 0, 0, 
+             1, 1, 0, 1, 1, 
+             1, 1, 1, 0, 0, 
+             1, 1, 1, 0, 1, 
+             1, 1, 1)
+d <- data.frame(Genus=Genus, Paleol=Paleol, Archaeol=Archaeol, 
+                Extinct=Extinct, stringsAsFactors=FALSE)
 
 # Sort by extinction status then alphabetical genus
 d <- d[with(d, order(Extinct, Genus)), ]
